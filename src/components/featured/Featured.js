@@ -1,0 +1,46 @@
+import React, { useEffect, useState } from "react";
+import "./featured.css";
+
+const Featured = () => {
+const  [bdatas, setbdata] = useState([])
+
+
+useEffect(()=>{
+  fetch("http://localhost:4000/hotels/countByCity?cities=berlin,madrid,london")
+  .then(res => res.json())
+  .then(data => {
+    setbdata(data)
+    console.log(data)
+}
+)
+
+},[])
+
+  return (
+    <div className="featured">
+       {(typeof bdatas ==='undefined') ?(
+        <p>Loading please wait</p>
+      ) : (
+        <>
+          {
+            bdatas.map((data, i)=>(
+              <div className="featuredItem" key={i} >
+                <img
+                  src="https://cf.bstatic.com/xdata/images/city/max500/957801.webp?k=a969e39bcd40cdcc21786ba92826063e3cb09bf307bcfeac2aa392b838e9b7a5&o="
+                  alt=""
+                  className="featuredImg"
+                />
+                <div className="featuredTitles">
+                  <h1>Berlin</h1>
+                  <h2>{data} properties</h2>
+                </div>
+              </div> 
+            ))
+          }         
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Featured;
